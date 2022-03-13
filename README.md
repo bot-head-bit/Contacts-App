@@ -1,6 +1,6 @@
 # Contacts-App
 
-#### There are two components to this project ,Backend is build using Springboot ,MongoDB and Frontend using React.There are two components to this project ,Backend is build using Springboot ,MongoDB and Frontend using React.
+#### There are two components to this project ,Backend is built using Springboot ,MongoDB and Frontend using React.
 
 ------------
 
