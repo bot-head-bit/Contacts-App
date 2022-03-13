@@ -12,11 +12,15 @@ const [columnData, setcolumnData] = useState([])
  useEffect(() => {
    const setData = async () => {
     const tableData = await getTableData();
-    const column = Object.keys(tableData[0]);
+    if(tableData){
+     
     settableData(tableData);
     //setcolumnData(column);
     setcolumnData(["name","phone","email"]);
+    }
+    
   }
+
   setData();
    
  }, []);

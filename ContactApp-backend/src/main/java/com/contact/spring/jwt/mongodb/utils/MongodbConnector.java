@@ -53,7 +53,7 @@ public class MongodbConnector {
 		
 		try {
 			//MongoClient mongoClient = getMongoClient();
-			MongoDatabase mongoDB = mClient.getDatabase("authdb");
+			MongoDatabase mongoDB = mClient.getDatabase("contactdb");
 			MongoCollection<Document> auditCollection = mongoDB.getCollection("contacts");
 			Document regQuery = new Document();
 			regQuery.append("$eq",contactListingDTO.getUsername());
@@ -81,15 +81,17 @@ public class MongodbConnector {
 				contactDetailsList.add(jsonObject);
 			} */
 		    Bson projection = fields(include("name", "phone","email"), excludeId());
-		    FindIterable<Document> cursor = auditCollection.find(new Document(whereQuery)).projection(projection);
-			cursor.forEach((Document document)  -> {
+		    MongoCursor<Document> cursor = auditCollection.find(new Document(whereQuery)).projection(projection).cursor();
+			
+		    //cursor.forEach((Document document)  -> 
+		       while (cursor.hasNext()){
 				try {
-					contactDetailsList.add((JSONObject) new JSONParser().parse(document.toJson()));
+					contactDetailsList.add((JSONObject) new JSONParser().parse(cursor.next().toJson()));
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			});
+			}
 			contactListingResponseDTO.setContactDetailsList1(contactDetailsList);
 			return contactListingResponseDTO;
 		} catch (Exception e) {
